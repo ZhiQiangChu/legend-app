@@ -1,6 +1,7 @@
 package cn.com.dplus.legend.service;
 
 
+import cn.com.dplus.legend.entity.mongo.UserTest;
 import cn.com.dplus.project.entity.ResponseEntity;
 
 import java.util.Map;
@@ -19,4 +20,10 @@ public interface ITest {
     ResponseEntity redisTest(String content);
 
     ResponseEntity publishMsg(String content);
+
+    ResponseEntity addUser(UserTest user);
+
+    ResponseEntity getUser(UserTest user);
+
+    ResponseEntity eventDriven() throws Exception;
 }
