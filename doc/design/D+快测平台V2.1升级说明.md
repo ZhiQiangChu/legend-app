@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `user_app`.`dp_app_user_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ```
+3. rancher配置`user-app`服务域名`user-app.svc.dplus.com.cn`
 
 --------------------------------------------------------
 

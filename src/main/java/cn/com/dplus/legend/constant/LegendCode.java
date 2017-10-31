@@ -16,4 +16,8 @@ public final class LegendCode extends Code {
     public static final int MSG_CONTENT_NULL = 1201;
     public static final String MSG_CONTENT_NULL_MSG = "消息内容为空";
 
+
+    public static final int ADD_USER_FAILED = 1203;
+    public static final String ADD_USER_FAILED_MSG = "添加用户失败";
+
 }

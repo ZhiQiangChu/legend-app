@@ -1,11 +1,17 @@
-import scala.App;
+import cn.com.dplus.legend.application.Application;
+import cn.com.dplus.project.utils.JsonUtil;
+import cn.com.dplus.redis.SentinelJedisCluster;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPageTree;
+import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import redis.clients.jedis.Jedis;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
+import java.io.File;
 
 /**
  * @Description:
@@ -13,11 +19,32 @@ import java.util.concurrent.TimeUnit;
  * @Date: Created in 上午10:48 17-7-5
  * @Modified By:
  */
-public class AppTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = Application.class)
+public class AppTest extends AbstractJUnit4SpringContextTests {
 
-
-    public static void main(String[] args) {
-//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//        System.out.println(df.format(new Date(1500432126393L)));
+    @Test
+    public void testGetPdf() {
+        File file = new File("/home/sondon/zhanjz/books/MongoDB权威指南第2版.pdf");
+        Jedis jedis = null;
+        try {
+            jedis = SentinelJedisCluster.getJedis();
+            System.out.println("step 1");
+            PDDocument pdDoc = PDDocument.load(file);
+//            jedis.set("pdf", JsonUtil.toJson(pdDoc));
+            PDDocument document = new PDDocument();
+            PDPageTree pages = pdDoc.getDocumentCatalog().getPages();
+            System.out.println("step 2:pages->"+pages.getCount());
+            document.addPage(pages.get(4));
+            document.save("/home/sondon/data/temp.pdf");
+            System.out.println("step 3");
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (jedis != null) {
+                SentinelJedisCluster.returnToPool(jedis);
+            }
+        }
     }
 }

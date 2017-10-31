@@ -31,9 +31,9 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             if (!startCompleted) {
                 Assert.isTrue(Redis.init(), "Redis init failed!");
                 Assert.isTrue(Kafka.init(), "Kafka init failed!");
-                Assert.isTrue(MongoDB.init(), "Mongo init failed!");
-                executor.submit(new HttpRecorder());
-                executor.submit(new WebSocketServer());
+//                Assert.isTrue(MongoDB.init(), "Mongo init failed!");
+//                executor.submit(new HttpRecorder());
+//                executor.submit(new WebSocketServer());
                 startCompleted = true;
                 LogUtil.Info("Application start success!");
             }
