@@ -1,15 +1,9 @@
 package cn.com.dplus.legend.listener;
 
-import cn.com.dplus.legend.kafka.Kafka;
-import cn.com.dplus.legend.websocket.WebSocketServer;
-import cn.com.dplus.mongodb.MongoDB;
-import cn.com.dplus.project.log.HttpRecorder;
 import cn.com.dplus.project.utils.LogUtil;
-import cn.com.dplus.redis.Redis;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.util.Assert;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,11 +23,13 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     public void onApplicationEvent(ContextRefreshedEvent event) {
         try {
             if (!startCompleted) {
-                Assert.isTrue(Redis.init(), "Redis init failed!");
-                Assert.isTrue(Kafka.init(), "Kafka init failed!");
+//                Assert.isTrue(Redis.init(), "Redis init failed!");
+//                Assert.isTrue(Kafka.init(), "Kafka init failed!");
 //                Assert.isTrue(MongoDB.init(), "Mongo init failed!");
 //                executor.submit(new HttpRecorder());
 //                executor.submit(new WebSocketServer());
+//                Assert.isTrue(SparkKafka.init(),"");
+
                 startCompleted = true;
                 LogUtil.Info("Application start success!");
             }

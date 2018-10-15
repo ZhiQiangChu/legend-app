@@ -5,4 +5,9 @@
  * @Modified By:
  */
 public class CacheTest {
+    public static void main(String[] args) {
+        Float f = 1.0f;
+        System.out.println(f == 1);
+        System.out.println(f == 1.0);
+    }
 }
