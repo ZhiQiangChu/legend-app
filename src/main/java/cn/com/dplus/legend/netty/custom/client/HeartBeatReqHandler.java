@@ -27,6 +27,7 @@ public class HeartBeatReqHandler extends ChannelInboundHandlerAdapter {
             heartBeat = ctx.executor().scheduleAtFixedRate(new HeartBeatReqHandler.HeartBeatTask(ctx), 0, 5000, TimeUnit.MILLISECONDS);
         } else if (message.getHeader() != null && message.getHeader().getType() == MessageType.HEARTBEAT_RESP.value()) {
             System.out.println("Client receive server heart beat message: ---> " + message);
+            ctx.fireChannelRead(msg);
         } else {
             ctx.fireChannelRead(msg);
         }

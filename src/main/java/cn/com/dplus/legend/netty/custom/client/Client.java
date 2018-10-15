@@ -1,13 +1,13 @@
 package cn.com.dplus.legend.netty.custom.client;
 
+import cn.com.dplus.legend.netty.custom.MessageType;
 import cn.com.dplus.legend.netty.custom.NettyConstant;
 import cn.com.dplus.legend.netty.custom.codec.MessageDecoder;
 import cn.com.dplus.legend.netty.custom.codec.MessageEncoder;
+import cn.com.dplus.legend.netty.custom.struct.Header;
+import cn.com.dplus.legend.netty.custom.struct.Message;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -50,6 +50,19 @@ public class Client {
 
             // 发起异步连接操作
             ChannelFuture future = b.connect(new InetSocketAddress(host, port), new InetSocketAddress(NettyConstant.LOCALIP, NettyConstant.LOCAL_PORT)).sync();
+
+            // 手动发测试数据,验证是否会产生TCP粘包/拆包情况
+//            Channel channel = future.channel();
+//            for (int i = 0; i < 500; i++) {
+//                Message message = new Message();
+//                Header header = new Header();
+//                header.setSessionID(1001L);
+//                header.setPriority((byte) 1);
+//                header.setType(MessageType.SERVICE_REQ.value());
+//                message.setHeader(header);
+//                message.setBody("我是请求数据" + i);
+//            }
+
             future.channel().closeFuture().sync();
         } finally {
             executor.execute(new Runnable() {

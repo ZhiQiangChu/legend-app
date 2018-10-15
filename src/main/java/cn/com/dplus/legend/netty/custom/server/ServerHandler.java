@@ -1,5 +1,6 @@
 package cn.com.dplus.legend.netty.custom.server;
 
+import cn.com.dplus.legend.netty.custom.MessageType;
 import cn.com.dplus.legend.netty.custom.struct.Header;
 import cn.com.dplus.legend.netty.custom.struct.Message;
 import io.netty.channel.ChannelHandlerContext;
@@ -25,7 +26,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         Header header = new Header();
         header.setSessionID(2002L);
         header.setPriority((byte) 2);
-        header.setType((byte) 1);
+        header.setType(MessageType.SERVICE_RESP.value());
         responseMessage.setHeader(header);
         responseMessage.setBody("我是响应数据: " + requestMessage.getBody());
         ctx.writeAndFlush(responseMessage);
